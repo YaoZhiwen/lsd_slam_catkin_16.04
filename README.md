@@ -43,57 +43,28 @@ and one window showing the 3D map (from viewer). If for some reason the initiali
 
 
 # 2. Installation
-We tested LSD-SLAM on two different system configurations, using Ubuntu 12.04 (Precise) and ROS fuerte, or Ubuntu 14.04 (trusty) and ROS indigo. Note that building without ROS is not supported, however ROS is only used for input and output, facilitating easy portability to other platforms.
+We tested LSD-SLAM using Ubuntu 16.04 and ROS kinetic.
 
-
-## 2.1 ROS fuerte + Ubuntu 12.04
+## 2.1 ROS kinetic + Ubuntu 16.04
 Install system dependencies:
 
-    sudo apt-get install ros-fuerte-libg2o liblapack-dev libblas-dev freeglut3-dev libqglviewer-qt4-dev libsuitesparse-dev
+    sudo apt-get install ros-kinetic-libg2o ros-kinetic-cv-bridge liblapack-dev libblas-dev freeglut3-dev libsuitesparse-dev libx11-dev
 
-In your ROS package path, clone the repository:
+    sudo apt install libqglviewer-dev-qt4
+    cd /usr/lib/x86_64-linux-gnu
+    sudo ln -s libQGLViewer-qt4.so libQGLViewer.so
 
-    git clone https://github.com/tum-vision/lsd_slam.git lsd_slam
+In your catkin_ws/src package path, clone the repository:
+
+    git clone https://github.com/YaoZhiwen/lsd_slam_catkin_16.04.git lsd_slam
 
 Compile the two package by typing:
 
-    rosmake lsd_slam
+    catkin_make
+    
 
 
-
-
-## 2.2 ROS indigo + Ubuntu 14.04
-**We do not use catkin, however fortunately old-fashioned CMake-builds are still possible with ROS indigo.**
-For this you need to create a rosbuild workspace (if you don't have one yet), using:
-
-    sudo apt-get install python-rosinstall
-    mkdir ~/rosbuild_ws
-    cd ~/rosbuild_ws
-    rosws init . /opt/ros/indigo
-    mkdir package_dir
-    rosws set ~/rosbuild_ws/package_dir -t .
-    echo "source ~/rosbuild_ws/setup.bash" >> ~/.bashrc
-    bash
-    cd package_dir
-
-Install system dependencies:
-
-    sudo apt-get install ros-indigo-libg2o ros-indigo-cv-bridge liblapack-dev libblas-dev freeglut3-dev libqglviewer-dev libsuitesparse-dev
-
-In your ROS package path, clone the repository:
-
-    git clone https://github.com/tum-vision/lsd_slam.git lsd_slam
-
-Compile the two package by typing:
-
-    rosmake lsd_slam
-
-
-
-
-
-
-## 2.3 openFabMap for large loop-closure detection [optional]
+## 2.2 openFabMap for large loop-closure detection [optional]
 If you want to use openFABMAP for large loop closure detection, uncomment the following lines in `lsd_slam_core/CMakeLists.txt` :
 
     #add_subdirectory(${PROJECT_SOURCE_DIR}/thirdparty/openFabMap)
